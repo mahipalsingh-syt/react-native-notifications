@@ -142,12 +142,12 @@ public class PushNotification implements IPushNotification {
         return getNotificationBuilder(intent,channelID).build();
     }
 
-    protected Notification.Builder getNotificationBuilder(PendingIntent intent,String channelID) {
+    protected NotificationCompat.Builder getNotificationBuilder(PendingIntent intent,String channelID) {
 
         String CHANNEL_ID = "channel_01";
         String CHANNEL_NAME = "Channel Name";
 
-        final Notification.Builder notification = new Notification.Builder(mContext)
+        final NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext)
                 .setContentTitle(mNotificationProps.getTitle())
                 .setContentText(mNotificationProps.getBody())
                 .setContentIntent(intent)
@@ -174,7 +174,7 @@ public class PushNotification implements IPushNotification {
     }
 
 
-    private void setUpIcon(Notification.Builder notification) {
+    private void setUpIcon(NotificationCompat.Builder notification) {
         int iconResId = getAppResourceId("notification_icon", "drawable");
         if (iconResId != 0) {
             notification.setSmallIcon(iconResId);
@@ -191,7 +191,7 @@ public class PushNotification implements IPushNotification {
             setUpIconColor(notification);
     }
 
-    private void setUpIconColor(Notification.Builder notification) {
+    private void setUpIconColor(NotificationCompat.Builder notification) {
         int colorResID = getAppResourceId("colorAccent", "color");
         if (colorResID != 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int color = mContext.getResources().getColor(colorResID);
