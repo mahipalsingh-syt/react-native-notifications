@@ -9,6 +9,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.facebook.react.bridge.ReactContext;
 import com.wix.reactnativenotifications.core.AppLaunchHelper;
 import com.wix.reactnativenotifications.core.AppLifecycleFacade;
@@ -177,8 +181,14 @@ public class PushNotification implements IPushNotification {
         } else {
             notification.setSmallIcon(mContext.getApplicationInfo().icon);
         }
+        setUpLargeIcon(notification);
+        //setUpIconColor(notification);
+    }
 
-        setUpIconColor(notification);
+    private void setUpLargeIcon(NotificationCompat.Builder notification) {
+            int iconResId = getAppResourceId("large", "drawable");
+            notification.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), iconResId));
+            setUpIconColor(notification);
     }
 
     private void setUpIconColor(Notification.Builder notification) {

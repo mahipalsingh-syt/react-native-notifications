@@ -95,7 +95,8 @@ android {
 dependencies {
     implementation "com.google.firebase:firebase-messaging:17.3.0"
     implementation 'com.facebook.react:react-native:+'
-    implementation project(path: ':react-native-ble-manager')
+    implementation "com.android.support:support-compat:28.0.0"
+   // implementation project(path: ':react-native-ble-manager')
 
     // tests
     testImplementation 'junit:junit:4.12'
