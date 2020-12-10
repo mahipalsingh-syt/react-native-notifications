@@ -10,6 +10,14 @@ public class PushNotificationProps {
         mBundle = bundle;
     }
 
+    public String getChannelId(){
+        return getBundleStringFirstNotNull("channelID", 'RadioBaksho');
+    }
+
+    public String getSound(){
+        return getBundleStringFirstNotNull('sound', 'silent')
+    }
+
     public String getTitle() {
         return getBundleStringFirstNotNull("gcm.notification.title", "title");
     }

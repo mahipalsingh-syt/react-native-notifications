@@ -34,8 +34,6 @@ import static com.wix.reactnativenotifications.Defs.LOGTAG;
 
 public class RNNotificationsModule extends ReactContextBaseJavaModule implements ActivityEventListener {
 
-
-
     public RNNotificationsModule(Application application, ReactApplicationContext reactContext) {
         super(reactContext);
         if (AppLifecycleFacadeHolder.get() instanceof ReactAppLifecycleFacade) {
@@ -43,8 +41,6 @@ public class RNNotificationsModule extends ReactContextBaseJavaModule implements
         }
 
         reactContext.addActivityEventListener(this);
-
-
     }
 
     @Override
@@ -105,11 +101,11 @@ public class RNNotificationsModule extends ReactContextBaseJavaModule implements
     public void postLocalNotification(ReadableMap notificationPropsMap, int notificationId) {
         if(BuildConfig.DEBUG) Log.d(LOGTAG, "Native method invocation: postLocalNotification");
         final Bundle notificationProps = Arguments.toBundle(notificationPropsMap);
-        long firedate= (long) notificationProps.getDouble("fireDate");
-        String  channelID=notificationProps.getString("channelID");
-        if( firedate!=0){
-            ScheduledNotification scheduledNotification=new ScheduledNotification();
-            scheduledNotification.scheduleNotification(getReactApplicationContext().getApplicationContext(),notificationProps,firedate,notificationId);
+        long fireDate = (long) notificationProps.getDouble("fireDate");
+        String  channelID = notificationProps.getString("channelID");
+        if( fireDate != 0){
+            ScheduledNotification scheduledNotification = new ScheduledNotification();
+            scheduledNotification.scheduleNotification(getReactApplicationContext().getApplicationContext(),notificationProps,fireDate,notificationId);
         }else {
             final IPushNotification pushNotification = PushNotification.get(getReactApplicationContext().getApplicationContext(), notificationProps);
             pushNotification.onPostRequest(notificationId,channelID);
@@ -118,20 +114,20 @@ public class RNNotificationsModule extends ReactContextBaseJavaModule implements
 
     @ReactMethod
     public void cancelLocalNotification(int notificationId) {
-        ScheduledNotification scheduledNotification=new ScheduledNotification();
+        ScheduledNotification scheduledNotification = new ScheduledNotification();
         scheduledNotification.cancelScheduledNotification(getReactApplicationContext().getApplicationContext(),notificationId);
     }
 
     @ReactMethod
     public void cancelAllLocalNotifications() {
-        ScheduledNotification scheduledNotification=new ScheduledNotification();
+        ScheduledNotification scheduledNotification = new ScheduledNotification();
         scheduledNotification.cancelAllScheduledNotifications(getReactApplicationContext().getApplicationContext());
     }
     @ReactMethod
     public void setCategories(ReadableArray categories) {
-    
+
     }
-    
+
     public void cancelDeliveredNotification(String tag, int notificationId) {
         IPushNotificationsDrawer notificationsDrawer = PushNotificationsDrawer.get(getReactApplicationContext().getApplicationContext());
         notificationsDrawer.onNotificationClearRequest(tag, notificationId);

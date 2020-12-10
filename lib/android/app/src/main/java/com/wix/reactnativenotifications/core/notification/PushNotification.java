@@ -145,8 +145,8 @@ public class PushNotification implements IPushNotification {
 
     protected NotificationCompat.Builder getNotificationBuilder(PendingIntent intent,String channelID) {
 
-        String CHANNEL_ID = "channel_01";
-        String CHANNEL_NAME = "Channel Name";
+        String CHANNEL_ID = "RadioBaksho";
+        String CHANNEL_NAME = "Radio Baksho";
 
         final NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext)
                 .setContentTitle(mNotificationProps.getTitle())
@@ -158,7 +158,7 @@ public class PushNotification implements IPushNotification {
         setUpIcon(notification);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if(channelID==null){
+            if(channelID == null){
                 NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                         CHANNEL_NAME,
                         NotificationManager.IMPORTANCE_DEFAULT);
@@ -171,7 +171,8 @@ public class PushNotification implements IPushNotification {
 
           }
 
-        Uri notificationSound = Uri.parse("android.resource://" + mContext.getPackageName() + "/raw/azan");
+        String soundFile = mNotificationProps.getSound()
+        Uri notificationSound = Uri.parse("android.resource://" + mContext.getPackageName() + "/raw/" + soundFile);
         notification.setSound(notificationSound);
 
         return notification;
