@@ -156,7 +156,7 @@ public class PushNotification implements IPushNotification {
                 .setContentTitle(mNotificationProps.getTitle())
                 .setContentText(mNotificationProps.getBody())
                 .setContentIntent(intent)
-                .setAutoCancel(true)
+                .setAutoCancel(true);
 
 
         setUpIcon(notification);
@@ -164,7 +164,7 @@ public class PushNotification implements IPushNotification {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             /* Setup Notification channels */
-            setupNotificationChannels()
+            setupNotificationChannels();
 
             /** Setting the notification channel to Notification */
             notification.setChannelId(mNotificationProps.getChannelId());
