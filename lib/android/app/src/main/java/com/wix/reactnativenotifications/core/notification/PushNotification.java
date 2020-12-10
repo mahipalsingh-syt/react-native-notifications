@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.net.Uri;
 
 import androidx.core.app.NotificationCompat;
 import android.graphics.Bitmap;
@@ -169,6 +170,9 @@ public class PushNotification implements IPushNotification {
             }
 
           }
+
+        Uri notificationSound = Uri.parse("android.resource://" + mContext.getPackageName() + "/raw/azan");
+        notification.setSound(notificationSound);
 
         return notification;
     }
