@@ -11,11 +11,11 @@ public class PushNotificationProps {
     }
 
     public String getChannelId(){
-        return getBundleStringFirstNotNull("channelID", 'RadioBaksho');
+        return getBundleStringFirstNotNull("channelID", "RadioBaksho");
     }
 
     public String getSound(){
-        return getBundleStringFirstNotNull('sound', 'silent')
+        return getBundleStringFirstNotNull("sound", "silent");
     }
 
     public String getTitle() {
