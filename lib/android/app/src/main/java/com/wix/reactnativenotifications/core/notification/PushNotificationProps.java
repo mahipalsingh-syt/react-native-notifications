@@ -10,12 +10,20 @@ public class PushNotificationProps {
         mBundle = bundle;
     }
 
-    public String getChannelId(){
+    public String getChannelId() {
         return getBundleStringFirstNotNull("channelID", "RadioBaksho");
     }
 
-    public String getSound(){
-        return getBundleStringFirstNotNull("sound", "silent");
+    public String getSound() {
+        return getBundleStringFirstNotNull("sound", "default");
+    }
+
+    public boolean isSilent() {
+        return mBundle.getBoolean("silent", false);
+    }
+
+    public boolean shouldVibrate() {
+        return mBundle.getBoolean("vibration", true);
     }
 
     public String getTitle() {
