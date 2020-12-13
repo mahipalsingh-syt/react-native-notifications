@@ -160,6 +160,7 @@ public class PushNotification implements IPushNotification {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             boolean isSilent = mNotificationProps.isSilent();
+            String soundFileName = mNotificationProps.getSound();
 
             /* Setup Notification channels */
             setupNotificationChannels();
