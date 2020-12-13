@@ -168,7 +168,7 @@ public class PushNotification implements IPushNotification {
             /** Setting the notification channel to Notification */
             if (isSilent) {
                  notification.setChannelId("LocalAzanNotiSilent");
-            } else if(!soundFileName.isEmpty() && soundFileName !== "default") {
+            } else if(!soundFileName.isEmpty() && soundFileName != "default") {
                 notification.setChannelId("LocalAzanNotification");
             } else {
                notification.setChannelId("RadioBaksho");
@@ -196,7 +196,7 @@ public class PushNotification implements IPushNotification {
 
         if (isSilent) {
             notification.setSound(null);
-        } else if(!soundFileName.isEmpty() && soundFileName !== "default") {
+        } else if(!soundFileName.isEmpty() && soundFileName != "default") {
             Uri soundFileUri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/raw/" + soundFileName);
             notification.setSound(soundFileUri);
         } else {
