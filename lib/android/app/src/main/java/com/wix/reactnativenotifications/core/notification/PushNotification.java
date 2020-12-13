@@ -147,7 +147,18 @@ public class PushNotification implements IPushNotification {
 
     protected NotificationCompat.Builder getNotificationBuilder(PendingIntent intent, String channelID) {
 
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        boolean isSilent = mNotificationProps.isSilent();
+        String soundFileName = mNotificationProps.getSound();
+        String channelName = "RadioBaksho";
+
+        if (isSilent) {
+            channelName = "LocalAzanNotiSilent";
+        } else if(!soundFileName.isEmpty() && !soundFileName.equals("default")) {
+            channelName = "LocalAzanNotification" ;
+        }
+
+//      String notiBody = mNotificationProps.getBody() + "|" + channelName + "|" + soundFileName + "|" + (isSilent ? "Silent": "Not Silent");
+//      String notiBody = channelName + "|" + soundFileName + "|" + (isSilent ? "Silent": "Not Silent");
 
         final NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext)
                 .setContentTitle(mNotificationProps.getTitle())
@@ -159,16 +170,13 @@ public class PushNotification implements IPushNotification {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            boolean isSilent = mNotificationProps.isSilent();
-            String soundFileName = mNotificationProps.getSound();
-
             /* Setup Notification channels */
             setupNotificationChannels();
 
             /** Setting the notification channel to Notification */
             if (isSilent) {
                  notification.setChannelId("LocalAzanNotiSilent");
-            } else if(!soundFileName.isEmpty() && soundFileName != "default") {
+            } else if(!soundFileName.isEmpty() && !soundFileName.equals("default")) {
                 notification.setChannelId("LocalAzanNotification");
             } else {
                notification.setChannelId("RadioBaksho");
@@ -196,7 +204,7 @@ public class PushNotification implements IPushNotification {
 
         if (isSilent) {
             notification.setSound(null);
-        } else if(!soundFileName.isEmpty() && soundFileName != "default") {
+        } else if(!soundFileName.isEmpty() && !soundFileName.equals("default")) {
             Uri soundFileUri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/raw/" + soundFileName);
             notification.setSound(soundFileUri);
         } else {
@@ -207,6 +215,11 @@ public class PushNotification implements IPushNotification {
     private void setupNotificationChannels(){
 
         final NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build();
 
         /** Creating RadioBaksho channel */
 
@@ -214,40 +227,31 @@ public class PushNotification implements IPushNotification {
         channel.setDescription("Radio Baksho Channel");
         channel.enableVibration(true);
         channel.setBypassDnd(true);
+        channel.setSound(alarmSound, audioAttributes);
         channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
         notificationManager.createNotificationChannel(channel);
 
         /** Creating LocalAzanNotification channel */
+        Uri azanSoundUri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/raw/" + "azan");
 
         NotificationChannel channel1 = new NotificationChannel("LocalAzanNotification", "Local Custom Azan Notification", NotificationManager.IMPORTANCE_HIGH);
         channel1.setDescription("Local Azan Notification Channel to receive azan related notification with azan sound and vibration");
+        channel1.setSound(azanSoundUri, audioAttributes);
         channel1.enableVibration(true);
         channel1.setBypassDnd(true);
         channel1.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
-        Uri azanSoundUri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/raw/" + "azan");
 
-        AudioAttributes audioAttributes1 = new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .build();
-
-        channel1.setSound(azanSoundUri, audioAttributes1);
         notificationManager.createNotificationChannel(channel1);
 
         /** Creating LocalAzanNotiSilent channel */
 
         Uri silentSoundUri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/raw/" + "silent");
 
-        AudioAttributes audioAttributes2 = new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .build();
-
         NotificationChannel channel2 = new NotificationChannel("LocalAzanNotiSilent", "Local Azan Silent Notification ", NotificationManager.IMPORTANCE_HIGH);
         channel2.setDescription("Local Azan Notification Channel to receive azan related notification with no sound and no vibration");
-        channel2.setSound(silentSoundUri, audioAttributes2);
+        channel2.setSound(silentSoundUri, audioAttributes);
         channel2.enableVibration(false);
         channel2.setBypassDnd(true);
         channel2.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
