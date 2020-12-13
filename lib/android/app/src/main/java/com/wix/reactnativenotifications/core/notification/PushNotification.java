@@ -228,26 +228,26 @@ public class PushNotification implements IPushNotification {
 
         Uri azanSoundUri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/raw/" + "azan");
 
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+        AudioAttributes audioAttributes1 = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_ALARM)
                 .build();
 
-        channel1.setSound(azanSoundUri, audioAttributes);
+        channel1.setSound(azanSoundUri, audioAttributes1);
         notificationManager.createNotificationChannel(channel1);
 
         /** Creating LocalAzanNotiSilent channel */
 
         Uri silentSoundUri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/raw/" + "silent");
 
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+        AudioAttributes audioAttributes2 = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_ALARM)
                 .build();
 
         NotificationChannel channel2 = new NotificationChannel("LocalAzanNotiSilent", "Local Azan Silent Notification ", NotificationManager.IMPORTANCE_HIGH);
         channel2.setDescription("Local Azan Notification Channel to receive azan related notification with no sound and no vibration");
-        channel2.setSound(silentSoundUri, audioAttributes);
+        channel2.setSound(silentSoundUri, audioAttributes2);
         channel2.enableVibration(false);
         channel2.setBypassDnd(true);
         channel2.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
