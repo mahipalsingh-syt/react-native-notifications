@@ -75,7 +75,7 @@ public class PushNotification implements IPushNotification {
 */
     @Override
     public void onReceived() throws InvalidNotificationException {
-        postNotification(null);
+        postNotification((Notification) null,null);
         notifyReceivedToJS();
     }
 
