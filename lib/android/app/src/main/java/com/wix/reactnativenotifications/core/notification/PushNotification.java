@@ -64,11 +64,18 @@ public class PushNotification implements IPushNotification {
         mNotificationProps = createProps(bundle);
     }
 
+/*
     @Override
     public void onReceived() throws InvalidNotificationException {
         if (!mAppLifecycleFacade.isAppVisible()) {
             postNotification((Notification) null,null);
         }
+        notifyReceivedToJS();
+    }
+*/
+    @Override
+    public void onReceived() throws InvalidNotificationException {
+        postNotification(null);
         notifyReceivedToJS();
     }
 
