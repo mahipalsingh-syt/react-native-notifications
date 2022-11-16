@@ -8,10 +8,10 @@
         <!--
          A proxy-service that gives the library an opportunity to do some work before launching/resuming the actual application task.
          -->
-        <service android:exported="true" android:name=".core.ProxyService"/>
+        <service android:exported="false" android:name=".core.ProxyService"/>
 
         <service
-        android:exported="true"
+        android:exported="false"
             android:name=".fcm.FcmInstanceIdListenerService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -20,11 +20,10 @@
         </service>
 
         <service
-        android:exported="true"
-            android:name=".fcm.FcmInstanceIdRefreshHandlerService"
+             android:name=".fcm.FcmInstanceIdRefreshHandlerService"
             android:exported="false" />
 
-        <receiver android:exported="true" android:name=".core.notification.ScheduledNotification" >
+        <receiver android:exported="false" android:name=".core.notification.ScheduledNotification" >
             <intent-filter>
                 <action android:name="PushLocalNotification" />
             </intent-filter>
